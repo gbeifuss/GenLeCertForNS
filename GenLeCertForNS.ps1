@@ -1811,7 +1811,7 @@ function Invoke-AddInitialADCConfig {
                 $response = Invoke-ADCRestApi -Session $ADCSession -Method POST -Type cspolicy -Payload $payload -Action add
             }
             Write-DisplayText -ForeGroundColor Yellow -NoNewLine "*"
-            Write-ToLogFile -I -C Invoke-AddInitialADCConfig -M "Content Switch Policy created successfully, bind Load Balancer `"$($Parameters.settings.LbName)`" to Content Switch `"$($CertRequest.CsVipName)`" with prio: $($Parameters.settings.CsVipBinding)"
+            Write-ToLogFile -I -C Invoke-AddInitialADCConfig -M "Content Switch Policy created successfully, bind Load Balancer `"$($Parameters.settings.LbName)`" to Content Switch `"$($CertRequest.CsVipName)`" with priority: $($Parameters.settings.CsVipBinding)"
             $payload = @{"name" = "$($CertRequest.CsVipName)"; "policyname" = "$($Parameters.settings.CspName)"; "priority" = "$($Parameters.settings.CsVipBinding)"; "targetlbvserver" = "$($Parameters.settings.LbName)"; "gotopriorityexpression" = "END"; }
             $response = Invoke-ADCRestApi -Session $ADCSession -Method PUT -Type csvserver_cspolicy_binding -Payload $payload
             Write-ToLogFile -I -C Invoke-AddInitialADCConfig -M "Binding created successfully! Finished configuring the ADC"
